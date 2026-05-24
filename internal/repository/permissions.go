@@ -1,10 +1,13 @@
 package repository
 
+type Permission int
+
 const (
-	Read   = 1 << iota //0001 -> 1
-	Write              //0010 -> 2
-	Delete             //0100 -> 4
-	Root               //1000 -> 8
+	//type Perm is inherited for Write, Del..
+	Read   Permission = 1 << iota //0001 -> 1
+	Write                         //0010 -> 2
+	Delete                        //0100 -> 4
+	Root                          //1000 -> 8
 
 	// read + write -> 0011
 	// write + delete -> 0110
@@ -13,12 +16,12 @@ const (
 	//....
 )
 
-func AddPermission(user int, permission int) int {
+func AddPermission(user Permission, permission Permission) Permission {
 	user |= permission
 	return user
 }
 
-func HasPermission(user int, permission int) bool {
+func HasPermission(user Permission, permission Permission) bool {
 	if user&permission != 0 {
 		return true
 	} else {
@@ -26,7 +29,7 @@ func HasPermission(user int, permission int) bool {
 	}
 }
 
-func DecodePermissions(user int) []string {
+func DecodePermissions(user Permission) []string {
 	res := []string{}
 
 	/* 0111  0001   */
@@ -46,7 +49,7 @@ func DecodePermissions(user int) []string {
 	return res
 }
 
-func RemovePermission(user int, permission int) int {
+func RemovePermission(user Permission, permission Permission) Permission {
 	user &^= permission
 	return user
 }

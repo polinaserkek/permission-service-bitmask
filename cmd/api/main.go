@@ -18,9 +18,7 @@ func main() {
 	}
 
 	perm := repository.DecodePermissions(users["vasya"])
-	if res {
-		fmt.Printf("Все права пользователя %s: %s", "vasya", perm)
-	}
+	fmt.Printf("Все права пользователя %s: %v", "vasya", perm)
 
 	// repository.HasPermission(users["keker666"], repository.Delete)
 
