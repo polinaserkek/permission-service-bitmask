@@ -10,9 +10,10 @@ func main() {
 	users := models.Users
 
 	// users["keker666"] = repository.AddPermission(users["keker666"], repository.Delete)
-	// users["keker666"] = repository.AddPermission(users["keker666"], repository.Root)
+	users["keker666"] = users["keker666"].Add(repository.Root)
 
-	res := repository.HasPermission(users["vasya"], repository.Read)
+	// res := repository.Read.Has(users["vasya"], repository.Read)
+	res := users["vasya"].Has(repository.Read)
 	if res {
 		fmt.Printf("Право %s есть у пользователя %s\n", "Read", "vasya")
 	}
