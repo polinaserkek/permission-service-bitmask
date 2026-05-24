@@ -1,0 +1,7 @@
+package models
+
+var Users = map[string]int{
+	"keker666": 3, //read + write
+	"vasya":    1, // read
+	"poleno":   7, // read + write + delete
+}
