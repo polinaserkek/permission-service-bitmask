@@ -16,22 +16,46 @@ const (
 )
 
 func AddPermission(user int, permission int) int {
-	fmt.Println(user)
-	fmt.Printf("%04b\n", user)
+	// fmt.Println(user)
+	// fmt.Printf("%04b\n", user)
 	user |= permission
-	fmt.Println(user)
-	fmt.Printf("%04b\n", user)
+	// fmt.Println(user)
+	// fmt.Printf("%04b\n", user)
 	return user
 
 }
 
-func HasPermission(user int, permission int) bool {
+func HasPermission(user int, permission int) (bool, string, string) {
 	if user&permission != 0 {
-		fmt.Println("y")
-		return true
+		// fmt.Println(user)
+		// fmt.Printf("%04b\n", user)
+		// fmt.Println(user & permission)
+		c := DecodePermission(user & permission)
+		return true, c, "есть"
+	} else {
+		fmt.Println("from else...")
+		c := DecodePermission(permission)
+		return false, c, "нет"
 	}
-	fmt.Println("n")
-	return false
+	// c := DecodePermission(permission)
+	// return false, c, "нет"
+}
+
+func DecodePermission(permission int) string {
+	fmt.Println(permission)
+	switch permission {
+	case 1:
+		return "Read"
+	case 2:
+		return "Write"
+	case 4:
+		return "Delete"
+	case 8:
+		return "Root"
+	}
+	// fmt.Println(permission)
+	// fmt.Printf("%04b\n", permission)
+	return "aaaaa"
 }
 
 func RemovePermission(user int, permission int) int {
