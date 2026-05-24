@@ -8,10 +8,10 @@ import (
 func main() {
 	users := models.Users
 
-	add := repository.AddPermission(users["keker666"], repository.Delete)
-	add()
-	add = repository.AddPermission(users["keker666"], repository.Root)
-	add()
+	users["keker666"] = repository.AddPermission(users["keker666"], repository.Delete)
+	users["keker666"] = repository.AddPermission(users["keker666"], repository.Root)
 
 	// repository.HasPermission(users["keker666"], repository.Delete)
+
+	users["keker666"] = repository.RemovePermission(users["keker666"], repository.Root)
 }

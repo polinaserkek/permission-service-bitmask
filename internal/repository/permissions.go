@@ -15,13 +15,14 @@ const (
 	//....
 )
 
-func AddPermission(user int, permission int) func() int {
-	return func() int {
-		fmt.Println(user)
-		user |= permission
-		fmt.Println(user)
-		return user
-	}
+func AddPermission(user int, permission int) int {
+	fmt.Println(user)
+	fmt.Printf("%04b\n", user)
+	user |= permission
+	fmt.Println(user)
+	fmt.Printf("%04b\n", user)
+	return user
+
 }
 
 func HasPermission(user int, permission int) bool {
@@ -29,9 +30,15 @@ func HasPermission(user int, permission int) bool {
 		fmt.Println("y")
 		return true
 	}
+	fmt.Println("n")
 	return false
 }
 
-func RemovePermission() {
+func RemovePermission(user int, permission int) int {
+	fmt.Println(user)
+	user &^= permission
+	// user = user &^ permission
+	fmt.Println(user)
 
+	return user
 }
