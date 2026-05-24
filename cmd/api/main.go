@@ -13,10 +13,13 @@ func main() {
 	// users["keker666"] = repository.AddPermission(users["keker666"], repository.Root)
 
 	res := repository.HasPermission(users["vasya"], repository.Read)
-	perm := repository.DecodePermissions(3)
-
 	if res {
-		fmt.Printf("Право %s есть у пользователя %s\n", perm, "vasya")
+		fmt.Printf("Право %s есть у пользователя %s\n", "Read", "vasya")
+	}
+
+	perm := repository.DecodePermissions(users["vasya"])
+	if res {
+		fmt.Printf("Все права пользователя %s: %s", "vasya", perm)
 	}
 
 	// repository.HasPermission(users["keker666"], repository.Delete)
