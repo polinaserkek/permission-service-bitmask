@@ -1,7 +1,5 @@
 package repository
 
-import "fmt"
-
 const (
 	Read   = 1 << iota //0001 -> 1
 	Write              //0010 -> 2
@@ -16,53 +14,39 @@ const (
 )
 
 func AddPermission(user int, permission int) int {
-	// fmt.Println(user)
-	// fmt.Printf("%04b\n", user)
 	user |= permission
-	// fmt.Println(user)
-	// fmt.Printf("%04b\n", user)
 	return user
-
 }
 
-func HasPermission(user int, permission int) (bool, string, string) {
+func HasPermission(user int, permission int) bool {
 	if user&permission != 0 {
-		// fmt.Println(user)
-		// fmt.Printf("%04b\n", user)
-		// fmt.Println(user & permission)
-		c := DecodePermission(user & permission)
-		return true, c, "есть"
+		return true
 	} else {
-		fmt.Println("from else...")
-		c := DecodePermission(permission)
-		return false, c, "нет"
+		return false
 	}
-	// c := DecodePermission(permission)
-	// return false, c, "нет"
 }
 
-func DecodePermission(permission int) string {
-	fmt.Println(permission)
-	switch permission {
-	case 1:
-		return "Read"
-	case 2:
-		return "Write"
-	case 4:
-		return "Delete"
-	case 8:
-		return "Root"
+func DecodePermissions(user int) []string {
+	res := []string{}
+
+	/* 0111  0001   */
+	if user&Read != 0 {
+		res = append(res, "Read")
 	}
-	// fmt.Println(permission)
-	// fmt.Printf("%04b\n", permission)
-	return "aaaaa"
+	if user&Write != 0 {
+		res = append(res, "Write")
+	}
+	if user&Delete != 0 {
+		res = append(res, "Delete")
+	}
+	if user&Root != 0 {
+		res = append(res, "Root")
+	}
+
+	return res
 }
 
 func RemovePermission(user int, permission int) int {
-	fmt.Println(user)
 	user &^= permission
-	// user = user &^ permission
-	fmt.Println(user)
-
 	return user
 }
