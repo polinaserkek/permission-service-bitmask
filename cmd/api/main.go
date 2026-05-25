@@ -16,18 +16,33 @@ func main() {
 		},
 	}
 
-	repo.Users["keker666"] = repo.Users["keker666"].Add(auth.Root)
+	/////////
 
-	res := repo.Users["vasya"].Has(auth.Read)
+	/*roles*/
+	kekerPerms := repo.GetUser("keker666")
+	fmt.Println(kekerPerms)
+	//добавили рута
+	kekerPerms = kekerPerms.Add(auth.Root)
+	fmt.Println(kekerPerms)
+
+	//
+	repo.UpdateUser("keker666", kekerPerms)
+
+	//убрали рута
+	kekerPerms = kekerPerms.Remove(auth.Root)
+
+	//////
+
+	vasyaPerms := repo.GetUser("vasya")
+
+	res := vasyaPerms.Has(auth.Read)
 	if res {
 		fmt.Printf("Право %s есть у пользователя %s\n", "Read", "vasya")
 	} else {
 		fmt.Println("Нет права")
 	}
 
-	perm := auth.DecodePermissions(repo.Users["vasya"])
-	fmt.Printf("Все права пользователя %s: %v", "vasya", perm)
-
-	repo.Users["keker666"] = repo.Users["keker666"].Remove(auth.Root)
+	permList := auth.DecodePermissions(vasyaPerms)
+	fmt.Printf("Все права пользователя %s: %v", "vasya", permList)
 
 }

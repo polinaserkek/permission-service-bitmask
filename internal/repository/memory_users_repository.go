@@ -1,26 +1,26 @@
 package repository
 
-import "permission-service/internal/auth"
+import (
+	"permission-service/internal/auth"
+)
 
-// var Users = map[string]auth.Permission{"keker666": 3, "vasya": 7, "poleno": 7}
-
+// отдельный тип    не объект!!
 type UserRepository struct {
 	Users map[string]auth.Permission
 }
 
-func (u UserRepository) GetUser(name string, permission auth.Permission) {
-
-}
-func (u UserRepository) GetAllUsers() {
-
-}
-func (u UserRepository) UpdateUser() {
-
+func (u *UserRepository) GetUser(name string) auth.Permission {
+	return u.Users[name]
 }
 
-func (u UserRepository) DeleteUser() {
-
+func (u *UserRepository) DeleteUser(name string) {
+	delete(u.Users, name)
 }
-func (u UserRepository) CreateUser() {
 
+func (u *UserRepository) UpdateUser(name string, permission auth.Permission) {
+	u.Users[name] = permission
+}
+
+func (u *UserRepository) CreateUser(name string, permission auth.Permission) {
+	u.Users[name] = permission
 }
