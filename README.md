@@ -1,1 +1,1 @@
-# permission-service-bitmask
+# bitmask-RBAC-microservice
