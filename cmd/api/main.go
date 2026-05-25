@@ -2,27 +2,25 @@ package main
 
 import (
 	"fmt"
-	"permission-service/internal/models"
+	"permission-service/internal/auth"
 	"permission-service/internal/repository"
 )
 
 func main() {
-	users := models.Users
+	users := repository.Users
 
-	// users["keker666"] = repository.AddPermission(users["keker666"], repository.Delete)
-	users["keker666"] = users["keker666"].Add(repository.Root)
+	users["keker666"] = users["keker666"].Add(auth.Root)
 
-	// res := repository.Read.Has(users["vasya"], repository.Read)
-	res := users["vasya"].Has(repository.Read)
+	res := users["vasya"].Has(auth.Read)
 	if res {
 		fmt.Printf("Право %s есть у пользователя %s\n", "Read", "vasya")
+	} else {
+		fmt.Println("Нет права")
 	}
 
-	perm := repository.DecodePermissions(users["vasya"])
+	perm := auth.DecodePermissions(users["vasya"])
 	fmt.Printf("Все права пользователя %s: %v", "vasya", perm)
 
-	// repository.HasPermission(users["keker666"], repository.Delete)
-
-	// users["keker666"] = repository.RemovePermission(users["keker666"], repository.Root)
+	users["keker666"] = users["keker666"].Remove(auth.Root)
 
 }
