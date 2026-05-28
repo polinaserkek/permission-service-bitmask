@@ -7,7 +7,6 @@ import (
 )
 
 func main() {
-
 	repo := repository.UserRepository{
 		Users: map[string]auth.Permission{
 			"keker666": 3,
