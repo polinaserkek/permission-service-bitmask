@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"permission-service/db"
 	"permission-service/internal/auth"
 	"permission-service/internal/repository"
 )
@@ -14,6 +15,13 @@ func main() {
 			"poleno":   7,
 		},
 	}
+
+	db, err := db.DatabaseConnect(
+		"localhost",
+		"5432",
+		"postgres",
+		"12345",
+		"rbac_test")
 
 	/////////
 

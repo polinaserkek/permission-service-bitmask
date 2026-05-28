@@ -2,11 +2,14 @@ package repository
 
 import (
 	"permission-service/internal/auth"
+
+	_ "github.com/google/uuid"
 )
 
 // отдельный тип    не объект!!
 type UserRepository struct {
 	Users map[string]auth.Permission
+	// id uuid
 }
 
 func (u *UserRepository) GetUser(name string) auth.Permission {
