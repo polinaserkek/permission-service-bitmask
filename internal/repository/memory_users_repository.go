@@ -106,9 +106,25 @@ func (u *User) GetAllUsers(dbConn *sql.DB) ([]*User, error) {
 	return users, err
 }
 
-func (u *User) DeleteUser(name string) {
+func (u *User) DeleteUser(dbConn *sql.DB, id uuid.UUID) error {
+	query := "DELETE from users WHERE id=$1"
+	_, err := dbConn.Exec(query, id)
+	return err
 }
 
-func (u *User) UpdateUser(name string, permission auth.Permission) {
+func (u *User) UpdateUser(
+	dbConn *sql.DB,
+	id uuid.UUID,
+	username string,
+	password string,
+	role int) error {
 
+	query := `UPDATE users SET
+		username = $2,
+		password = $3,
+		role = $4
+		WHERE id=$1`
+
+	_, err := dbConn.Exec(query, id, username, password, role)
+	return err
 }

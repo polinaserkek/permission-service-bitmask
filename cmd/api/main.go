@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"permission-service/db"
 	"permission-service/internal/repository"
+
+	"github.com/google/uuid"
 )
 
 func main() {
@@ -28,6 +30,12 @@ func main() {
 	// }
 	// fmt.Println(poleno)
 
+	//UDPATE
+	id := uuid.MustParse("f7155a86-1271-4124-ad1a-22aa852f8d6b")
+	err = userType.UpdateUser(db, id, "test222", "1111", 3)
+	if err != nil {
+		fmt.Println("Problem to get all users: ", err)
+	}
 	//GET ALL  !!!!!!!!!!!!!!!!!!!!
 
 	users, err := userType.GetAllUsers(db)
@@ -39,6 +47,13 @@ func main() {
 	for _, v := range users {
 		fmt.Println(v)
 	}
+
+	// DELETE
+	// id := uuid.MustParse("2f948611-e89e-44a4-bf1c-b376c837f078")
+	// err = userType.DeleteUser(db, id)
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
 
 	////////
 
