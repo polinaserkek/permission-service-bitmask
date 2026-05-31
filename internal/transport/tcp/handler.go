@@ -16,4 +16,8 @@ func TcpHandler(conn net.Conn) {
 
 	stringedResponse := string(buffer[:n])
 	fmt.Println(stringedResponse)
+
+	// switch stringedResponse {
+	// 	case CmdSetRole: auth.Service.SetRole()
+	// }
 }

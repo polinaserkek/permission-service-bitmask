@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 	"permission-service/db"
+	"permission-service/internal/auth"
+	"permission-service/internal/model"
 	"permission-service/internal/repository"
-
-	"github.com/google/uuid"
 )
 
 func main() {
@@ -15,57 +15,70 @@ func main() {
 		fmt.Println("main.go says that there`s some err with db conn: ", err)
 	}
 
-	userType := repository.User{}
+	userData := repository.NewUserRepository(db)
+	service := auth.NewService(userData)
 
-	// //CREATE  !!!!!!!!!!!!!!!!!!!!
-	// newId := uuid.New()
-	// userType.CreateUser(db, newId, "test", "12345", 6)
+	//new create!!!
 
-	//GET ONE  !!!!!!!!!!!!!!!!!!!!
-	// id := uuid.MustParse("2f948611-e89e-44a4-bf1c-b376c837f078")
-	// poleno, err := userType.GetUser(db, id)
+	// _, err = service.Register("keker777", "123456", 4)
+
+	// new login
+	// loginedUsed, err := service.Login("1bbc7dd3-3c89-47c3-ae0c-e4ea84d1d79c", )
+
+	//new get
+	// _, err = service.GetUser("1bbc7dd3-3c89-47c3-ae0c-e4ea84d1d79c")
 
 	// if err != nil {
-	// 	fmt.Println(err)
+	// 	fmt.Println("user not found")
+	// } else {
+	// 	fmt.Println("we ve found the user but we re too lazy to print him")
 	// }
-	// fmt.Println(poleno)
 
-	//UDPATE
-	id := uuid.MustParse("f7155a86-1271-4124-ad1a-22aa852f8d6b")
-	err = userType.UpdateUser(db, id, "test222", "1111", 3)
-	if err != nil {
-		fmt.Println("Problem to get all users: ", err)
-	}
-	//GET ALL  !!!!!!!!!!!!!!!!!!!!
+	//get all users
 
-	users, err := userType.GetAllUsers(db)
-	if err != nil {
-		fmt.Println("Problem to get all users: ", err)
-	}
-	fmt.Println(users)
-
+	var users []*model.User
+	users, _ = service.GetAllUsers()
+	// users = append(users, users...)
 	for _, v := range users {
 		fmt.Println(v)
 	}
 
+	// id := uuid.MustParse("f7155a86-1271-4124-ad1a-22aa852f8d6b")
+
+	// err = service.SetRole(8, id, 3)
+	// if err != nil {
+	// 	fmt.Println("u r not root", err)
+	// }
+
+	// //UDPATE
+	// id := uuid.MustParse("f7155a86-1271-4124-ad1a-22aa852f8d6b")
+	// err = userData.UpdateUser(db, id, "test222", "1111", permissions.Delete)
+	// if err != nil {
+	// 	fmt.Println("Problem to get all users: ", err)
+	// }
+
+	// //GET ALL  !!!!!!!!!!!!!!!!!!!!
+
+	// users, err := userData.GetAllUsers()
+	// if err != nil {
+	// 	fmt.Println("Problem to get all users: ", err)
+	// }
+	// fmt.Println(users)
+
+	// for _, v := range users {
+	// 	fmt.Println(v)
+	// }
+
 	// DELETE
 	// id := uuid.MustParse("2f948611-e89e-44a4-bf1c-b376c837f078")
-	// err = userType.DeleteUser(db, id)
+	// err = userType.DeleteUser(id)
 	// if err != nil {
 	// 	fmt.Println(err)
 	// }
 
 	////////
 
-	// repo := repository.UserRepository{
-	// 	Users: map[string]auth.Permission{
-	// 		"keker666": 3,
-	// 		"vasya":    7,
-	// 		"poleno":   7,
-	// 	},
-	// }
-
-	// /*roles*/
+	/*roles*/
 	// kekerPerms := repo.GetUser("keker666")
 	// fmt.Println(kekerPerms)
 	// //добавили рута
