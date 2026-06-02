@@ -3,9 +3,10 @@ package tcp
 import (
 	"fmt"
 	"net"
+	"permission-service/internal/auth"
 )
 
-func CreateServer() {
+func CreateServer(service *auth.Service) {
 	listener, err := net.Listen("tcp", ":8080")
 
 	if err != nil {
@@ -21,7 +22,8 @@ func CreateServer() {
 			fmt.Println(err)
 			return
 		}
+		fmt.Println("tcp server...")
 
-		go TcpHandler(conn)
+		go TcpHandler(conn, service)
 	}
 }
