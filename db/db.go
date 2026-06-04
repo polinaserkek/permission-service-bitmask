@@ -3,12 +3,23 @@ package db
 import (
 	"database/sql"
 	"fmt"
+	"os"
+	"permission-service/internal/config"
 
 	_ "github.com/lib/pq"
 )
 
-func DatabaseConnect(hostname string, port string, username string, password string, db string) (*sql.DB, error) {
-	connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", hostname, port, username, password, db)
+func DatabaseConnect() (*sql.DB, error) {
+	config.LoadEnv()
+	connStr := fmt.Sprintf(
+		"host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+		os.Getenv("DB_HOST"),
+		os.Getenv("DB_PORT"),
+		os.Getenv("DB_USER"),
+		os.Getenv("DB_PASSWORD"),
+		os.Getenv("DB_NAME"),
+	)
+	// connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", hostname, port, username, password, db)
 	conn, err := sql.Open("postgres", connStr)
 
 	if err != nil {

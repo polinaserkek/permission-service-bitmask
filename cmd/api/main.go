@@ -17,19 +17,16 @@ func frontendTest() {
 		fmt.Println(err)
 	}
 	defer conn.Close()
-	fmt.Println("front...")
-
 	conn.Write([]byte("5|keker|8"))
 	io.Copy(os.Stdout, conn)
-
 }
 
 func main() {
-
-	db, err := db.DatabaseConnect("localhost", "5432", "postgres", "12345", "postgres")
+	db, err := db.DatabaseConnect()
 
 	if err != nil {
 		fmt.Println("main.go says that there`s some err with db conn: ", err)
+		return
 	}
 
 	userData := repository.NewUserRepository(db)

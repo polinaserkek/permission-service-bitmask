@@ -31,8 +31,25 @@ func TcpHandler(conn net.Conn, service *auth.Service) {
 	conn.Close()
 
 	switch Cmd(cmdInt) {
+
+	case CmdLogin:
+
+	case CmdRegister:
+		service.Register("lol", "11111", permissions.Permission(3))
+
+	case CmdCheckPermission:
+
+	case CmdGetMe:
+
+	case CmdLogout:
+
 	case CmdSetRole:
 		parsedID := uuid.MustParse("1bbc7dd3-3c89-47c3-ae0c-e4ea84d1d79c")
 		service.SetRole(permissions.Permission(8), parsedID, permissions.Permission(8))
+
+	case CmdGetAllUsers:
+
+	case CmdDeleteUser:
+
 	}
 }

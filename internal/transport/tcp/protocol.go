@@ -3,9 +3,17 @@ package tcp
 type Cmd uint8
 
 const (
+	//public
 	CmdLogin Cmd = iota + 1
 	CmdRegister
+
+	//for auth-ed
 	CmdCheckPermission
-	CmdGetRoles
+	CmdGetMe
+	CmdLogout
+
+	//root
 	CmdSetRole
+	CmdGetAllUsers
+	CmdDeleteUser
 )
