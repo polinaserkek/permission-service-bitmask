@@ -25,6 +25,8 @@ func (r *UserRepository) Login(id uuid.UUID, username string, password string) {
 func (r *UserRepository) SetRole(id uuid.UUID, role permissions.Permission) error {
 	query := `UPDATE users SET role=$2
 	WHERE id=$1`
+	fmt.Println("repo...")
+
 	_, err := r.db.Exec(query, id, role)
 	return err
 }

@@ -3,6 +3,7 @@ package auth
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 
 	// "permission-service/internal/auth"
 
@@ -70,6 +71,6 @@ func (s *Service) SetRole(
 	if caller.Has(permissions.Root) == false {
 		return errors.New("forbidden")
 	}
-
+	fmt.Println("setrole service.go...")
 	return s.repo.SetRole(targetID, role)
 }

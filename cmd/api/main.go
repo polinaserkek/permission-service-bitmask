@@ -13,11 +13,12 @@ import (
 
 func frontendTest() {
 	conn, err := net.Dial("tcp", "localhost:8080")
+	fmt.Println("main.go: frontendTest()")
 	if err != nil {
 		fmt.Println(err)
 	}
 	defer conn.Close()
-	conn.Write([]byte("5|keker|8"))
+	conn.Write([]byte("6|keker777|3"))
 	io.Copy(os.Stdout, conn)
 }
 
@@ -29,10 +30,15 @@ func main() {
 		return
 	}
 
+	//1
 	userData := repository.NewUserRepository(db)
+
+	//2
 	service := auth.NewService(userData)
 
+	//3
 	go tcp.CreateServer(service)
+
 	frontendTest()
 
 	//new create!!!
