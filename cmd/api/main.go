@@ -2,25 +2,22 @@ package main
 
 import (
 	"fmt"
-	"io"
-	"net"
-	"os"
 	"permission-service/db"
 	"permission-service/internal/auth"
 	"permission-service/internal/repository"
 	"permission-service/internal/transport/tcp"
 )
 
-func frontendTest() {
-	conn, err := net.Dial("tcp", "localhost:8080")
-	fmt.Println("main.go: frontendTest()")
-	if err != nil {
-		fmt.Println(err)
-	}
-	defer conn.Close()
-	conn.Write([]byte("7"))
-	io.Copy(os.Stdout, conn)
-}
+// func frontendTest() {
+// 	conn, err := net.Dial("tcp", "localhost:8080")
+// 	fmt.Println("main.go: frontendTest()")
+// 	if err != nil {
+// 		fmt.Println(err)
+// 	}
+// 	defer conn.Close()
+// 	conn.Write([]byte("6|keker777|4"))
+// 	io.Copy(os.Stdout, conn)
+// }
 
 func main() {
 	db, err := db.DatabaseConnect()
@@ -37,9 +34,9 @@ func main() {
 	service := auth.NewService(userData)
 
 	//3
-	go tcp.CreateServer(service)
+	tcp.CreateServer(service)
 
-	frontendTest()
+	// frontendTest()
 
 	//new create!!!
 

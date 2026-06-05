@@ -35,6 +35,7 @@ func NewService(repo *repository.UserRepository) *Service {
 
 func (s *Service) GetUser(id string) (*model.User, error) {
 	parsedId := uuid.MustParse(id)
+	fmt.Println("service GetUser()")
 	foundUser, err := s.repo.GetUser(parsedId)
 	if err != nil {
 		return nil, err
@@ -67,7 +68,6 @@ func (s *Service) Register(
 	newId := uuid.New()
 	result, _ := s.repo.CreateUser(newId, username, password, role)
 	return &result, nil
-	// userType.CreateUser(db, newId, "test", "12345", 6)
 }
 
 func (s *Service) SetRole(
@@ -78,5 +78,11 @@ func (s *Service) SetRole(
 	if caller.Has(permissions.Root) == false {
 		return errors.New("forbidden")
 	}
+	fmt.Println("service.go: SetRole()...")
 	return s.repo.SetRole(targetID, role)
+}
+
+func (s *Service) DeleteUser(id uuid.UUID) error {
+	err := s.repo.DeleteUser(id)
+	return err
 }

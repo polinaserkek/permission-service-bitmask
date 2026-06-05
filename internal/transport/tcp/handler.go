@@ -7,6 +7,8 @@ import (
 	"permission-service/internal/permissions"
 	"strconv"
 	"strings"
+
+	"github.com/google/uuid"
 )
 
 func TcpHandler(conn net.Conn, service *auth.Service) {
@@ -28,10 +30,11 @@ func TcpHandler(conn net.Conn, service *auth.Service) {
 	command := res2[0]
 	// username := res2[1]
 	// pass := res2[2]
-	// role := res2[3]
+	// role := res2[2]
 	cmdInt, err := strconv.Atoi(command)
 	fmt.Println(cmdInt)
 	// roleInt, err := strconv.Atoi(role)
+
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -64,6 +67,7 @@ func TcpHandler(conn net.Conn, service *auth.Service) {
 		service.GetAllUsers(permissions.Permission(8))
 
 	case CmdDeleteUser:
-
+		parsedID := uuid.MustParse("1bbc7dd3-3c89-47c3-ae0c-e4ea84d1d79c")
+		service.DeleteUser(parsedID)
 	}
 }
