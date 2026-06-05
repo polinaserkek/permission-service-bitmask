@@ -18,7 +18,7 @@ func frontendTest() {
 		fmt.Println(err)
 	}
 	defer conn.Close()
-	conn.Write([]byte("6|keker777|3"))
+	conn.Write([]byte("7"))
 	io.Copy(os.Stdout, conn)
 }
 
@@ -49,13 +49,14 @@ func main() {
 	// loginedUser, err := service.Login("1bbc7dd3-3c89-47c3-ae0c-e4ea84d1d79c", )
 
 	// new get
-	user, err := service.GetUser("1bbc7dd3-3c89-47c3-ae0c-e4ea84d1d79c")
+	// user, err := service.GetUser("1bbc7dd3-3c89-47c3-ae0c-e4ea84d1d79c")
 
-	if err != nil {
-		fmt.Println("user not found")
-	} else {
-		fmt.Println(user)
-	}
+	// if err != nil {
+	// 	fmt.Println("user not found")
+
+	// } else {
+	// 	fmt.Println(user)
+	// }
 
 	//get all users
 

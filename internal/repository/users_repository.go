@@ -107,6 +107,7 @@ func (r *UserRepository) GetAllUsers() ([]*model.User, error) {
 
 		users = append(users, &user)
 	}
+	fmt.Println("repo: GetAllUsers()...")
 	return users, err
 }
 

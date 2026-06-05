@@ -43,10 +43,17 @@ func (s *Service) GetUser(id string) (*model.User, error) {
 
 }
 
-func (s *Service) GetAllUsers() ([]*model.User, error) {
+func (s *Service) GetAllUsers(caller permissions.Permission) ([]*model.User, error) {
+	if caller.Has(permissions.Root) == false {
+		return nil, errors.New("forbidden")
+	}
 	users, err := s.repo.GetAllUsers()
 	if err != nil {
 		return nil, err
+	}
+	fmt.Println("service.go: GetAllUsers()...")
+	for _, v := range users {
+		fmt.Println(v)
 	}
 	return users, err
 }
@@ -71,6 +78,5 @@ func (s *Service) SetRole(
 	if caller.Has(permissions.Root) == false {
 		return errors.New("forbidden")
 	}
-	fmt.Println("setrole service.go...")
 	return s.repo.SetRole(targetID, role)
 }

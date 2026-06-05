@@ -7,8 +7,6 @@ import (
 	"permission-service/internal/permissions"
 	"strconv"
 	"strings"
-
-	"github.com/google/uuid"
 )
 
 func TcpHandler(conn net.Conn, service *auth.Service) {
@@ -26,10 +24,14 @@ func TcpHandler(conn net.Conn, service *auth.Service) {
 	stringedResponse := string(buffer[:n])
 
 	res2 := strings.Split(stringedResponse, "|")
+	fmt.Println(res2)
 	command := res2[0]
-	role := res2[2]
+	// username := res2[1]
+	// pass := res2[2]
+	// role := res2[3]
 	cmdInt, err := strconv.Atoi(command)
-	roleInt, err := strconv.Atoi(role)
+	fmt.Println(cmdInt)
+	// roleInt, err := strconv.Atoi(role)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -45,7 +47,7 @@ func TcpHandler(conn net.Conn, service *auth.Service) {
 	case CmdLogin:
 
 	case CmdRegister:
-		service.Register("lol", "11111", permissions.Permission(3))
+		// service.Register(username, pass, permissions.Permission(roleInt))
 
 	case CmdCheckPermission:
 
@@ -54,13 +56,12 @@ func TcpHandler(conn net.Conn, service *auth.Service) {
 	case CmdLogout:
 
 	case CmdSetRole:
-		parsedID := uuid.MustParse("1bbc7dd3-3c89-47c3-ae0c-e4ea84d1d79c")
-		fmt.Println("handler 2...")
-
-		//7
-		service.SetRole(permissions.Permission(8), parsedID, permissions.Permission(roleInt))
+		// parsedID := uuid.MustParse("1bbc7dd3-3c89-47c3-ae0c-e4ea84d1d79c")
+		// service.SetRole(permissions.Permission(8), parsedID, permissions.Permission(roleInt))
 
 	case CmdGetAllUsers:
+		fmt.Println("CASE from handler...")
+		service.GetAllUsers(permissions.Permission(8))
 
 	case CmdDeleteUser:
 
