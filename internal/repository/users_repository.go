@@ -49,6 +49,7 @@ func (r *UserRepository) CreateUser(
 		fmt.Println("Error to create user: ", err)
 
 	}
+	fmt.Println("repo:CreateUser()...")
 
 	return result, err
 }

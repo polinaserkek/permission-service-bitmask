@@ -66,6 +66,7 @@ func (s *Service) Register(
 	role permissions.Permission) (*sql.Result, error) {
 
 	newId := uuid.New()
+	fmt.Println("service.go: Register()")
 	result, _ := s.repo.CreateUser(newId, username, password, role)
 	return &result, nil
 }

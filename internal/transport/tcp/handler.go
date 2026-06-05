@@ -5,6 +5,7 @@ import (
 	"net"
 	"permission-service/internal/auth"
 	"permission-service/internal/permissions"
+	"permission-service/pkg/protocol"
 	"strconv"
 	"strings"
 
@@ -25,15 +26,17 @@ func TcpHandler(conn net.Conn, service *auth.Service) {
 
 	stringedResponse := string(buffer[:n])
 
-	res2 := strings.Split(stringedResponse, "|")
-	fmt.Println(res2)
-	command := res2[0]
-	// username := res2[1]
-	// pass := res2[2]
-	// role := res2[2]
+	array := strings.Split(stringedResponse, "|")
+
+	fmt.Println(array)
+
+	command := array[0]
+	username := array[1]
+	pass := array[2]
+	role := array[3]
+
 	cmdInt, err := strconv.Atoi(command)
-	fmt.Println(cmdInt)
-	// roleInt, err := strconv.Atoi(role)
+	roleInt, err := strconv.Atoi(role)
 
 	if err != nil {
 		fmt.Println(err)
@@ -41,33 +44,35 @@ func TcpHandler(conn net.Conn, service *auth.Service) {
 
 	//6
 	conn.Write([]byte(stringedResponse))
-	conn.Close()
+	defer conn.Close()
 
 	///////////
 
-	switch Cmd(cmdInt) {
+	switch protocol.Cmd(cmdInt) {
 
-	case CmdLogin:
+	case protocol.CmdLogin:
 
-	case CmdRegister:
-		// service.Register(username, pass, permissions.Permission(roleInt))
+	case protocol.CmdRegister:
+		fmt.Println("handler: CmdRegister..")
+		service.Register(username, pass, permissions.Permission(roleInt))
 
-	case CmdCheckPermission:
+	case protocol.CmdCheckPermission:
 
-	case CmdGetMe:
+	case protocol.CmdGetMe:
 
-	case CmdLogout:
+	case protocol.CmdLogout:
 
-	case CmdSetRole:
+	case protocol.CmdSetRole:
 		// parsedID := uuid.MustParse("1bbc7dd3-3c89-47c3-ae0c-e4ea84d1d79c")
 		// service.SetRole(permissions.Permission(8), parsedID, permissions.Permission(roleInt))
 
-	case CmdGetAllUsers:
+	case protocol.CmdGetAllUsers:
 		fmt.Println("CASE from handler...")
 		service.GetAllUsers(permissions.Permission(8))
 
-	case CmdDeleteUser:
+	case protocol.CmdDeleteUser:
 		parsedID := uuid.MustParse("1bbc7dd3-3c89-47c3-ae0c-e4ea84d1d79c")
 		service.DeleteUser(parsedID)
 	}
+
 }

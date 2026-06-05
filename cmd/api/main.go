@@ -8,17 +8,6 @@ import (
 	"permission-service/internal/transport/tcp"
 )
 
-// func frontendTest() {
-// 	conn, err := net.Dial("tcp", "localhost:8080")
-// 	fmt.Println("main.go: frontendTest()")
-// 	if err != nil {
-// 		fmt.Println(err)
-// 	}
-// 	defer conn.Close()
-// 	conn.Write([]byte("6|keker777|4"))
-// 	io.Copy(os.Stdout, conn)
-// }
-
 func main() {
 	db, err := db.DatabaseConnect()
 
@@ -27,20 +16,11 @@ func main() {
 		return
 	}
 
-	//1
 	userData := repository.NewUserRepository(db)
 
-	//2
 	service := auth.NewService(userData)
 
-	//3
 	tcp.CreateServer(service)
-
-	// frontendTest()
-
-	//new create!!!
-
-	// _, err = service.Register("keker777", "123456", 4)
 
 	// new login
 	// loginedUser, err := service.Login("1bbc7dd3-3c89-47c3-ae0c-e4ea84d1d79c", )
