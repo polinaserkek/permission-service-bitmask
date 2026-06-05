@@ -5,8 +5,7 @@ import (
 	"errors"
 	"fmt"
 
-	// "permission-service/internal/auth"
-
+	"permission-service/internal/hash"
 	"permission-service/internal/model"
 	"permission-service/internal/permissions"
 	"permission-service/internal/repository"
@@ -60,14 +59,13 @@ func (s *Service) GetAllUsers(caller permissions.Permission) ([]*model.User, err
 }
 
 func (s *Service) Register(
-
 	username string,
-	password string,
+	password hash.Password,
 	role permissions.Permission) (*sql.Result, error) {
 
 	newId := uuid.New()
 	fmt.Println("service.go: Register()")
-	result, _ := s.repo.CreateUser(newId, username, password, role)
+	result, _ := s.repo.CreateUser(newId, username, hash.Password(password), role)
 	return &result, nil
 }
 

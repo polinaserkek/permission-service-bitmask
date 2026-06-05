@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net"
 	"permission-service/internal/auth"
+	"permission-service/internal/hash"
 	"permission-service/internal/permissions"
 	"permission-service/pkg/protocol"
 	"strconv"
@@ -33,6 +34,8 @@ func TcpHandler(conn net.Conn, service *auth.Service) {
 	command := array[0]
 	username := array[1]
 	pass := array[2]
+
+	hashedPass, err := hash.HashPassword(hash.Password(pass))
 	role := array[3]
 
 	cmdInt, err := strconv.Atoi(command)
@@ -54,7 +57,7 @@ func TcpHandler(conn net.Conn, service *auth.Service) {
 
 	case protocol.CmdRegister:
 		fmt.Println("handler: CmdRegister..")
-		service.Register(username, pass, permissions.Permission(roleInt))
+		service.Register(username, hash.Password(hashedPass), permissions.Permission(roleInt))
 
 	case protocol.CmdCheckPermission:
 

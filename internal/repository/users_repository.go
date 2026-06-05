@@ -3,6 +3,7 @@ package repository
 import (
 	"database/sql"
 	"fmt"
+	"permission-service/internal/hash"
 	"permission-service/internal/model"
 	"permission-service/internal/permissions"
 
@@ -18,7 +19,7 @@ func NewUserRepository(db *sql.DB) *UserRepository {
 	return &UserRepository{db: db}
 }
 
-func (r *UserRepository) Login(id uuid.UUID, username string, password string) {
+func (r *UserRepository) Login(id uuid.UUID, username string, password hash.Password) {
 
 }
 
@@ -34,7 +35,7 @@ func (r *UserRepository) SetRole(id uuid.UUID, role permissions.Permission) erro
 func (r *UserRepository) CreateUser(
 	id uuid.UUID,
 	username string,
-	password string,
+	password hash.Password,
 	role permissions.Permission) (sql.Result, error) {
 
 	query := `
@@ -121,7 +122,7 @@ func (r *UserRepository) DeleteUser(id uuid.UUID) error {
 func (r *UserRepository) UpdateUser(
 	id uuid.UUID,
 	username string,
-	password string,
+	password hash.Password,
 	role permissions.Permission) error {
 
 	query := `UPDATE users SET
