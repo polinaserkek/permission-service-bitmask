@@ -52,7 +52,6 @@ func (s *Service) GetAllUsers(caller permissions.Permission) ([]*model.User, err
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println("service.go: GetAllUsers()...")
 	for _, v := range users {
 		fmt.Println(v)
 	}
@@ -65,8 +64,7 @@ func (s *Service) Register(
 	role permissions.Permission) (*sql.Result, error) {
 
 	newId := uuid.New()
-	fmt.Println("service.go: Register()")
-	result, _ := s.repo.CreateUser(newId, username, hash.Password(password), role)
+	result, _ := s.repo.CreateUser(newId, username, hash.Password(password), permissions.Permission(1))
 	return &result, nil
 }
 
@@ -78,11 +76,27 @@ func (s *Service) SetRole(
 	if caller.Has(permissions.Root) == false {
 		return errors.New("forbidden")
 	}
-	fmt.Println("service.go: SetRole()...")
 	return s.repo.SetRole(targetID, role)
 }
 
-func (s *Service) DeleteUser(id uuid.UUID) error {
+func (s *Service) DeleteUser(caller permissions.Permission, id uuid.UUID) error {
+	if caller.Has(permissions.Root) == false {
+		return errors.New("forbidden")
+	}
 	err := s.repo.DeleteUser(id)
 	return err
+}
+
+func (s *Service) CmdCheckPermission(
+	caller permissions.Permission,
+	username string) (permissions.Permission, error) {
+	if caller.Has(permissions.Root) == false {
+		return 0, errors.New("forbidden")
+	}
+	user, err := s.repo.Login(username)
+	if err != nil {
+		return 0, err
+	}
+	fmt.Println(permissions.DecodePermissions(user.Role))
+	return user.Role, nil
 }

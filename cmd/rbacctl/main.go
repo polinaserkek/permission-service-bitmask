@@ -17,7 +17,7 @@ func main() {
 
 	defer conn.Close()
 
-	cmd := "1|test222|1111"
+	cmd := "5|test333"
 
 	conn.Write([]byte(cmd))
 	io.Copy(os.Stdout, conn)

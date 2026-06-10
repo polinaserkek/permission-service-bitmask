@@ -8,11 +8,11 @@ const (
 	CmdRegister
 
 	//for auth-ed
-	CmdCheckPermission
 	CmdGetMe
 	CmdLogout
 
 	//root
+	CmdCheckPermission
 	CmdSetRole
 	CmdGetAllUsers
 	CmdDeleteUser

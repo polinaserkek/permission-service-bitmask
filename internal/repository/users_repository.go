@@ -20,11 +20,13 @@ func NewUserRepository(db *sql.DB) *UserRepository {
 }
 
 func (r *UserRepository) Login(username string) (*model.User, error) {
-	query := "SELECT password FROM users WHERE username=$1"
+	query := "SELECT password, role FROM users WHERE username=$1"
 	var user model.User
 	row := r.db.QueryRow(query, username)
-	err := row.Scan(&user.Password)
-
+	err := row.Scan(
+		&user.Password,
+		&user.Role,
+	)
 	if err != nil {
 		return nil, err
 	}
