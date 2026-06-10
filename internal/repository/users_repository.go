@@ -19,14 +19,21 @@ func NewUserRepository(db *sql.DB) *UserRepository {
 	return &UserRepository{db: db}
 }
 
-func (r *UserRepository) Login(id uuid.UUID, username string, password hash.Password) {
+func (r *UserRepository) Login(username string) (*model.User, error) {
+	query := "SELECT password FROM users WHERE username=$1"
+	var user model.User
+	row := r.db.QueryRow(query, username)
+	err := row.Scan(&user.Password)
 
+	if err != nil {
+		return nil, err
+	}
+	return &user, nil
 }
 
 func (r *UserRepository) SetRole(id uuid.UUID, role permissions.Permission) error {
 	query := `UPDATE users SET role=$2
 	WHERE id=$1`
-	fmt.Println("repo...")
 
 	_, err := r.db.Exec(query, id, role)
 	return err
@@ -65,7 +72,8 @@ func (r *UserRepository) GetUser(
 	`
 	var user model.User
 
-	err := r.db.QueryRow(query, id).Scan(
+	row := r.db.QueryRow(query, id)
+	err := row.Scan(
 		&user.ID,
 		&user.Username,
 		&user.Password,

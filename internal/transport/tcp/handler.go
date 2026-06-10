@@ -36,10 +36,10 @@ func TcpHandler(conn net.Conn, service *auth.Service) {
 	pass := array[2]
 
 	hashedPass, err := hash.HashPassword(hash.Password(pass))
-	role := array[3]
+	// role := array[3]
 
 	cmdInt, err := strconv.Atoi(command)
-	roleInt, err := strconv.Atoi(role)
+	// roleInt, err := strconv.Atoi(role)
 
 	if err != nil {
 		fmt.Println(err)
@@ -54,10 +54,12 @@ func TcpHandler(conn net.Conn, service *auth.Service) {
 	switch protocol.Cmd(cmdInt) {
 
 	case protocol.CmdLogin:
+		fmt.Println("handler: CmdLogin..")
+		service.Login(username, hash.Password(hashedPass))
 
 	case protocol.CmdRegister:
-		fmt.Println("handler: CmdRegister..")
-		service.Register(username, hash.Password(hashedPass), permissions.Permission(roleInt))
+		// fmt.Println("handler: CmdRegister..")
+		// service.Register(username, hash.Password(hashedPass), permissions.Permission(roleInt))
 
 	case protocol.CmdCheckPermission:
 

@@ -24,7 +24,8 @@ func CreateServer(service *auth.Service) {
 		}
 		fmt.Println("tcp server...")
 
-		//4
+		// conn.Write([]byte())
+
 		go TcpHandler(conn, service)
 	}
 }

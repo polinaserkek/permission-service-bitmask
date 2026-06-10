@@ -21,16 +21,17 @@ func NewService(repo *repository.UserRepository) *Service {
 	return &Service{repo: repo}
 }
 
-// must be corrected!!!
-// func (s *Service) Login(id string, username string, password string) (*model.User, error) {
-// 	parsedId := uuid.MustParse(id)
-// 	foundUser, err := s.repo.Login(parsedId)
+func (s *Service) Login(username string, password hash.Password) (bool, error) {
+	foundPassword, err := s.repo.Login(username)
+	if err != nil {
+		fmt.Println(err)
+		return false, err
+	}
+	result := hash.CheckPassword(password, foundPassword.Password)
 
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	return foundUser, nil
-// }
+	fmt.Printf("welcome, %s", username)
+	return result, nil
+}
 
 func (s *Service) GetUser(id string) (*model.User, error) {
 	parsedId := uuid.MustParse(id)

@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"net"
+	"os"
 	"permission-service/pkg/protocol"
 )
 
@@ -14,6 +16,11 @@ func main() {
 	}
 
 	defer conn.Close()
+
+	cmd := "1|test222|1111"
+
+	conn.Write([]byte(cmd))
+	io.Copy(os.Stdout, conn)
 
 }
 
