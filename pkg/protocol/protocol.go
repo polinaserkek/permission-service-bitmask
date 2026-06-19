@@ -17,3 +17,7 @@ const (
 	CmdGetAllUsers
 	CmdDeleteUser
 )
+
+func CodeProtocol(role Cmd) {
+
+}

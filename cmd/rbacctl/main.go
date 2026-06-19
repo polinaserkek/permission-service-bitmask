@@ -5,7 +5,6 @@ import (
 	"io"
 	"net"
 	"os"
-	"permission-service/pkg/protocol"
 )
 
 func main() {
@@ -16,14 +15,15 @@ func main() {
 	}
 
 	defer conn.Close()
+	SendCommand()
 
-	cmd := "5|test333"
+	cmd := "3|8665e896-26d8-4513-9053-4c06f992c264|7"
 
 	conn.Write([]byte(cmd))
 	io.Copy(os.Stdout, conn)
 
 }
 
-func SendCommand(cmd protocol.Cmd) {
+func SendCommand(sentData string) {
 
 }

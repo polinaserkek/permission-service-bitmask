@@ -1,0 +1,59 @@
+1) func (s *Service) GetUser(id string) (*model.User, error) {
+	parsedId := uuid.MustParse(id)
+	foundUser, err := s.repo.GetUser(parsedId)
+	if err != nil {
+		return nil, err
+	}
+	fmt.Println(foundUser)
+	return foundUser, nil
+}
+
+fix id parsing (there is uuid in console)
+
+2) realize sessions
+
+3) http gateway
+
+4) !!!!
+to feel sessions it should be done with flow goroutines ---> mutex
+
+
+5) err handling
+
+6) goroutine cycles
+
+7) patterns
+8) grpc 
+
+9) tests
+
+10) sqlite
+11) redis
+
+12) verify skills hh
+
+13) make()
+14) docker
+
+15) kubernetes
+
+16) git 
+
+17) bash/zsh
+
+18) middleware
+
+19) algos
+
+20) trees
+
+21) IaC
+
+22) ansible
+
+
+
+
+
+
+

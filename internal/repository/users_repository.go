@@ -2,7 +2,6 @@ package repository
 
 import (
 	"database/sql"
-	"fmt"
 	"permission-service/internal/hash"
 	"permission-service/internal/model"
 	"permission-service/internal/permissions"
@@ -56,10 +55,8 @@ func (r *UserRepository) CreateUser(
 	result, err := r.db.Exec(query, id, username, password, role)
 
 	if err != nil {
-		fmt.Println("Error to create user: ", err)
-
+		return nil, err
 	}
-	fmt.Println("repo:CreateUser()...")
 
 	return result, err
 }
@@ -82,10 +79,9 @@ func (r *UserRepository) GetUser(
 		&user.Role)
 
 	if err != nil {
-		fmt.Println("Error to get one user: ", err)
 		return nil, err
 	}
-	return &user, err
+	return &user, nil
 
 }
 
@@ -96,7 +92,6 @@ func (r *UserRepository) GetAllUsers() ([]*model.User, error) {
 	rows, err := r.db.Query(query)
 
 	if err != nil {
-		fmt.Println("Problem to get all users: ", err)
 		return nil, err
 	}
 
@@ -113,14 +108,12 @@ func (r *UserRepository) GetAllUsers() ([]*model.User, error) {
 		)
 
 		if err != nil {
-			fmt.Println("Problem to get all users: ", err)
 			return nil, err
 		}
 
 		users = append(users, &user)
 	}
-	fmt.Println("repo: GetAllUsers()...")
-	return users, err
+	return users, nil
 }
 
 func (r *UserRepository) DeleteUser(id uuid.UUID) error {
